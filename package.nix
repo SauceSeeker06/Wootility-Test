@@ -15,7 +15,9 @@ let
     sha256 = "sha256-JcVyuilhy1qjXyIeniXZ0s4qxXr/4wLXrXgTTxjCkBk=";
   };
 
-  rules = fetchurl {};
+  rules = fetchurl {
+    "https://github.com/SauceSeeker06/Wootility-Test/blob/master/wootility-rules.nix"
+  };
 
 
 in
@@ -44,7 +46,7 @@ in
     '';
 
     services.udev.packages = [
-      wootingRules
+      rules
   ];
 
     extraPkgs =
@@ -56,7 +58,7 @@ in
       homepage = "https://wooting.io/wootility";
       description = "Customization and management software for Wooting keyboards";
       platforms = lib.platforms.linux;
-      license = lib.licenses.unfree;
+      license = lib.licenses.free;
       maintainers = with lib.maintainers; [
         sodiboo
         returntoreality
