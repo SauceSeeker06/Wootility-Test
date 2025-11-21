@@ -15,6 +15,8 @@ let
     sha256 = "sha256-JcVyuilhy1qjXyIeniXZ0s4qxXr/4wLXrXgTTxjCkBk=";
   };
 
+  rules = fetchurl {};
+
 
 in
   appimageTools.wrapType2 {
@@ -54,7 +56,7 @@ in
       homepage = "https://wooting.io/wootility";
       description = "Customization and management software for Wooting keyboards";
       platforms = lib.platforms.linux;
-      license = lib.licenses.free;
+      license = lib.licenses.unfree;
       maintainers = with lib.maintainers; [
         sodiboo
         returntoreality
