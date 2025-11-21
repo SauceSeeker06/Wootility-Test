@@ -16,13 +16,14 @@ let
   };
 
   rules = fetchurl {
-    "https://github.com/SauceSeeker06/Wootility-Test/blob/master/wootility-rules.nix"
+    url = "https://github.com/SauceSeeker06/Wootility-Test/blob/master/wootility-rules.nix";
+    sha256 = "sha256-JcVyuilhy1qjXyIeniXZ0s4qxXr/4wLXrXgTTxjCkBk=";
   };
 
 
 in
   appimageTools.wrapType2 {
-    inherit pname version src;
+    inherit pname version src rules;
 
     nativeBuildInputs = [ makeWrapper ];
 
@@ -36,7 +37,7 @@ in
 
         install -Dm444 ${contents}/wootility.desktop -t $out/share/applications
         install -Dm444 ${contents}/wootility.png -t $out/share/pixmaps
-        install -Dpm644 $src etc/udev/rules.d/70-wooting.rules
+        install -Dm444 $rules -t $out/lib/udev/rules.d/70-wooting.rules
         substituteInPlace $out/share/applications/wootility.desktop \
           --replace-fail 'Exec=AppRun --no-sandbox' 'Exec=wootility'
       '';

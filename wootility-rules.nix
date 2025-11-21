@@ -2,7 +2,7 @@
 
 pkgs.writeTextFile {
   name = "70-wooting";
-  destination = "/etc/udev/rules.d/70-wooting.rules";
+  destination = "${out}/lib/70-wooting.rules";
   text = ''
     # Wooting One Legacy
     SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="ff01", TAG+="uaccess"
