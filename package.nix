@@ -1,11 +1,10 @@
-# ./wootility-package.nix
 { 
   stdenv, 
   lib, 
   fetchurl, 
   appimageTools, 
   makeWrapper,
-  pkgs # Make sure pkgs is passed in if this is a standalone file
+  pkgs
 }:
 
 stdenv.mkDerivation (finalAttrs: {
