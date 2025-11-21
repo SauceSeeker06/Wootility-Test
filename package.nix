@@ -1,12 +1,12 @@
-{ stdenv, lib}:
+{ stdenv, lib, git}:
 
 stdenv.mkDerivation rec {
   pname = "Wootility-Test";
   version = "0.0.1";
 
   src = fetchFromGitHub {
-    owner = "SauceSeeker";
-    repo = pname;
+    owner = "SauceSeeker06";
+    repo = https://github.com/${owner}/${pname};
     rev = "v${version}";
     sha256 = "0000000000000000000000000000000000000000000000000000";
   };
