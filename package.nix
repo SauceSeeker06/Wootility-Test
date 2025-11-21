@@ -1,29 +1,29 @@
+# ./wootility-package.nix
 { 
   stdenv, 
   lib, 
   fetchurl, 
   appimageTools, 
-  makeWrapper
+  makeWrapper,
+  pkgs # Make sure pkgs is passed in if this is a standalone file
 }:
 
-
-let
+stdenv.mkDerivation (finalAttrs: {
   pname = "wootility";
   version = "5.1.2";
+
   src = fetchurl {
     url = "https://api.wooting.io/public/${pname}/download?os=linux&version=${version}";
     sha256 = "sha256-JcVyuilhy1qjXyIeniXZ0s4qxXr/4wLXrXgTTxjCkBk=";
   };
 
   rules = fetchurl {
-    url = "https://github.com/SauceSeeker06/Wootility-Test/blob/master/wootility-rules.nix";
-    sha256 = "sha256-JcVyuilhy1qjXyIeniXZ0s4qxXr/4wLXrXgTTxjCkBk=";
+    url = "https://raw.githubusercontent.com/SauceSeeker06/Wootility-Test/refs/heads/master/rules.txt";
+    sha256 = "sha256-Gu/3D/jvlKZWh23BjCLYRjV78Y/Bv/rI6l2rbAjWu74=";
   };
 
-
-in
   appimageTools.wrapType2 {
-    inherit pname version src rules;
+    inherit pname version src;
 
     nativeBuildInputs = [ makeWrapper ];
 
@@ -37,7 +37,6 @@ in
 
         install -Dm444 ${contents}/wootility.desktop -t $out/share/applications
         install -Dm444 ${contents}/wootility.png -t $out/share/pixmaps
-        install -Dm444 $rules -t $out/lib/udev/rules.d/70-wooting.rules
         substituteInPlace $out/share/applications/wootility.desktop \
           --replace-fail 'Exec=AppRun --no-sandbox' 'Exec=wootility'
       '';
@@ -45,10 +44,6 @@ in
     profile = ''
       export LC_ALL=C.UTF-8
     '';
-
-    services.udev.packages = [
-      rules
-  ];
 
     extraPkgs =
       pkgs: with pkgs; [
@@ -67,3 +62,4 @@ in
       mainProgram = "wootility";
     };
   }
+})
