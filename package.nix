@@ -36,6 +36,8 @@ stdenv.mkDerivation (finalAttrs: {
 
         install -Dm444 ${contents}/wootility.desktop -t $out/share/applications
         install -Dm444 ${contents}/wootility.png -t $out/share/pixmaps
+        mkdir -p $out/etc/udev/rules.d/
+        cp rules $out/etc/udev/rules.d/
         substituteInPlace $out/share/applications/wootility.desktop \
           --replace-fail 'Exec=AppRun --no-sandbox' 'Exec=wootility'
       '';
